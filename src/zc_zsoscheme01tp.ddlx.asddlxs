@@ -1,0 +1,165 @@
+@Metadata.layer: #CUSTOMER
+@UI: {
+  headerInfo: {
+    typeName: 'soscheme', 
+    typeNamePlural: 'soschemes', 
+    title: {
+      type: #STANDARD, 
+      label: 'SO Scheme Application', 
+      value: 'Salesorder'
+    }
+  }, 
+  presentationVariant: [ {
+    sortOrder: [ {
+      by: 'Salesorder', 
+      direction: #DESC
+    } ], 
+    visualizations: [ {
+      type: #AS_LINEITEM
+    } ]
+  } ]
+}
+annotate view ZC_zsoscheme01TP with
+{
+  @UI.facet: [ {
+    id: 'idCollection', 
+    type: #COLLECTION, 
+    label: 'SO Scheme Application', 
+    position: 10 
+  }, 
+  {
+    id: 'idIdentification', 
+    parentId: 'idCollection', 
+    type: #IDENTIFICATION_REFERENCE, 
+    label: 'General Information', 
+    position: 20 
+  }, 
+  {
+    id: 'idzsoschemelines', 
+    type: #LINEITEM_REFERENCE, 
+    label: 'zsoschemelines', 
+    position: 30 , 
+    targetElement: '_zsoschemelines'
+  } ]
+  @UI.lineItem: [ {
+    position: 10 , 
+    importance: #HIGH, 
+    label: 'Company'
+  } ]
+  @UI.identification: [ {
+    position: 10 , 
+    label: 'Company'
+  } ]
+  @UI.selectionField: [ {
+    position: 10 
+  } ]
+  @Consumption.valueHelpDefinition: [{ entity: { name: 'I_CompanyCodeVH', element: 'CompanyCode' } }]  
+  Bukrs;
+  
+  @UI.lineItem: [ {
+    position: 20 , 
+    importance: #HIGH, 
+    label: 'Sales Order'
+  },
+    {  type: #FOR_ACTION, dataAction: 'createSOSchemeData', label: 'Generate SO Scheme'  }
+    ]
+  @UI.identification: [ {
+    position: 20 , 
+    label: 'Sales Order'
+  },
+    {  type: #FOR_ACTION, dataAction: 'createSOSchemeData', label: 'Generate SO Scheme'  }
+    ]
+  @UI.selectionField: [ {
+    position: 20 
+  } ]
+  @Consumption.valueHelpDefinition: [{ entity: { name: 'I_SalesOrderStdVH', element: 'SalesOrder' } }]  
+  Salesorder;
+  
+  @UI.lineItem: [ {
+    position: 30 , 
+    importance: #HIGH, 
+    label: 'Scheme Code'
+  } ]
+  @UI.identification: [ {
+    position: 30 , 
+    label: 'Scheme Code'
+  } ]
+  @UI.selectionField: [ {
+    position: 30 
+  } ]
+  Schemecode;
+  
+  @UI.lineItem: [ {
+    position: 35 , 
+    importance: #HIGH, 
+    label: 'Scheme Group Code'
+  } ]
+  @UI.identification: [ {
+    position: 35 , 
+    label: 'Scheme Group Code'
+  } ]
+  @UI.selectionField: [ {
+    position: 35 
+  } ]
+  Schemegroupcode;
+  
+//  @UI.hidden: true
+  @UI.lineItem: [ {
+    position: 38 , 
+    importance: #HIGH, 
+    label: 'Scheme Check Code'
+  } ]
+  @UI.identification: [ {
+    position: 38 , 
+    label: 'Scheme Check Code'
+  } ]
+  Schemecheckcode;
+  
+  @UI.lineItem: [ {
+    position: 40 , 
+    importance: #HIGH, 
+    label: 'Order Qty'
+  } ]
+  @UI.identification: [ {
+    position: 40 , 
+    label: 'Order Qty'
+  } ]
+  Orderqty;
+  
+  @UI.lineItem: [ {
+    position: 50 , 
+    importance: #HIGH, 
+    label: 'Free Qty'
+  } ]
+  @UI.identification: [ {
+    position: 50 , 
+    label: 'Free Qty'
+  } ]
+  Freeqty;
+  
+  @UI.lineItem: [ {
+    position: 55 , 
+    importance: #HIGH, 
+    label: 'Applied Qty'
+  } ]
+  @UI.identification: [ {
+    position: 55 , 
+    label: 'Applied Qty'
+  } ]
+  Appliedqty;
+
+  @UI.hidden: true
+  CreatedBy;
+  
+  @UI.hidden: true
+  CreatedAt;
+  
+  @UI.hidden: true
+  LastChangedBy;
+  
+  @UI.hidden: true
+  LastChangedAt;
+  
+  @UI.hidden: true
+  LocalLastChangedAt;
+}

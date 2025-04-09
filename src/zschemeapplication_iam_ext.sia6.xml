@@ -1,0 +1,47 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_SIA6" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <SIA6>
+    <MAIN_OBJECT>
+     <NAME>ZSCHEMEAPPLICATION_IAM_EXT</NAME>
+     <TYPE>SIA6</TYPE>
+     <DESCRIPTION>IAM App for Scheme  applications</DESCRIPTION>
+     <RESPONSIBLE>CB9980000014</RESPONSIBLE>
+     <MASTER_LANGUAGE>EN</MASTER_LANGUAGE>
+     <MASTER_SYSTEM>NXS</MASTER_SYSTEM>
+     <PACKAGE_REF>
+      <PACKAGE_NAME>ZSCHEMEAPPLICATION</PACKAGE_NAME>
+     </PACKAGE_REF>
+     <ABAP_LANGU_VERSION>5</ABAP_LANGU_VERSION>
+    </MAIN_OBJECT>
+    <APP_ID>ZSCHEMEAPPLICATION_IAM_EXT</APP_ID>
+    <APP_TYPE>EXT</APP_TYPE>
+    <ABAP_LANGUAGE_VERSION>5</ABAP_LANGUAGE_VERSION>
+    <UI_APP_ID>ZSCHEMEAPP_UI5R</UI_APP_ID>
+    <SERVICE>
+     <item>
+      <REL_NAME>ZCL_HTTP_SOSCHEME</REL_NAME>
+      <REL_TYPE>HTTP</REL_TYPE>
+      <APP_ID>ZSCHEMEAPPLICATION_IAM_EXT</APP_ID>
+      <SRVC_NAME>0A32F2DF48DFE5E5E50D9DAE88C39B</SRVC_NAME>
+      <SRVC_TYPE>HT</SRVC_TYPE>
+      <TEXT>HTTP Service for Class zci_http_soscheme</TEXT>
+      <TYPE_TEXT>HTTP Service</TYPE_TEXT>
+     </item>
+     <item>
+      <REL_NAME>ZUI_ZSOSCHEME_O2                   0001</REL_NAME>
+      <REL_TYPE>IWSV</REL_TYPE>
+      <APP_ID>ZSCHEMEAPPLICATION_IAM_EXT</APP_ID>
+      <SRVC_NAME>9D1B3C4311092A87F15A28A4B25C6D</SRVC_NAME>
+      <SRVC_TYPE>HT</SRVC_TYPE>
+      <UIAD_SRC>ZSCHEMEAPP_UI5R</UIAD_SRC>
+      <TEXT>Service binding for zsoscheme</TEXT>
+      <TYPE_TEXT>OData V2</TYPE_TEXT>
+     </item>
+    </SERVICE>
+    <PUBLISH_STATUS>p</PUBLISH_STATUS>
+   </SIA6>
+  </asx:values>
+ </asx:abap>
+</abapGit>

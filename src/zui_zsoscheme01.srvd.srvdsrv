@@ -1,0 +1,7 @@
+@ObjectModel.leadingEntity.name: 'ZC_zsoscheme01TP'
+define service ZUI_zsoscheme01 {
+  expose ZC_zsoscheme01TP     as zsoscheme;
+  expose ZC_zsoschemelinesTP  as zsoschemelines;
+  expose ZSOSCHEMEGROUPED     as zsoschemegrouped;
+  expose ZSOSCHEMELINEGROUPED as zsoschemelinesgrouped;
+}

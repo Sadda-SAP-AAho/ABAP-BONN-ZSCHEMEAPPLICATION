@@ -1,0 +1,125 @@
+@Metadata.layer: #CUSTOMER
+@UI: {
+  headerInfo: {
+    typeName: 'soschemelines', 
+    typeNamePlural: 'soschemelines', 
+    title: {
+      type: #STANDARD, 
+      label: 'SO Scheme Lines', 
+      value: 'Productcode'
+    }
+  }, 
+  presentationVariant: [ {
+    sortOrder: [ {
+      by: 'Productcode', 
+      direction: #DESC
+    } ], 
+    visualizations: [ {
+      type: #AS_LINEITEM
+    } ]
+  } ]
+}
+annotate view ZC_zsoschemelinesTP with
+{
+  @UI.facet: [ {
+    id: 'idzsoschemelines', 
+    purpose: #STANDARD, 
+    type: #IDENTIFICATION_REFERENCE, 
+    label: 'SO Scheme Lines', 
+    position: 10 
+  } ]
+  @UI.lineItem: [ {
+    position: 10 , 
+    importance: #HIGH, 
+    label: 'Company'
+  } ]
+  @UI.identification: [ {
+    position: 10 , 
+    label: 'Company'
+  } ]
+  Bukrs;
+  
+  @UI.lineItem: [ {
+    position: 20 , 
+    importance: #HIGH, 
+    label: 'Sales Order'
+  } ]
+  @UI.identification: [ {
+    position: 20 , 
+    label: 'Sales Order'
+  } ]
+  Salesorder;
+  
+  @UI.lineItem: [ {
+    position: 30 , 
+    importance: #HIGH, 
+    label: 'Scheme Code'
+  } ]
+  @UI.identification: [ {
+    position: 30 , 
+    label: 'Scheme Code'
+  } ]
+  Schemecode;
+
+  @UI.lineItem: [ {
+    position: 35 , 
+    importance: #HIGH, 
+    label: 'Group Code'
+  } ]
+  @UI.identification: [ {
+    position: 35 , 
+    label: 'Group Code'
+  } ]
+  Schemegroupcode;
+  
+  @UI.lineItem: [ {
+    position: 40 , 
+    importance: #HIGH, 
+    label: 'Product Code'
+  } ]
+  @UI.identification: [ {
+    position: 40 , 
+    label: 'Product Code'
+  } ]
+  Productcode;
+  
+  @UI.hidden: true
+  Schemecheckcode;
+  
+  @UI.lineItem: [ {
+    position: 50 , 
+    importance: #HIGH, 
+    label: 'Product desc'
+  } ]
+  @UI.identification: [ {
+    position: 50 , 
+    label: 'Product desc'
+  } ]
+  Productdesc;
+  
+  @UI.lineItem: [ {
+    position: 60 , 
+    importance: #HIGH, 
+    label: 'Freeqty'
+  } ]
+  @UI.identification: [ {
+    position: 60 , 
+    label: 'Freeqty'
+  } ]
+  Freeqty;
+  
+  @UI.hidden: true
+  CreatedBy;
+  
+  @UI.hidden: true
+  CreatedAt;
+  
+  @UI.hidden: true
+  LastChangedBy;
+  
+  @UI.hidden: true
+  LastChangedAt;
+  
+  @UI.hidden: true
+  LocalLastChangedAt;
+}

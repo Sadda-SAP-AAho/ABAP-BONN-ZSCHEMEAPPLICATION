@@ -1,0 +1,9 @@
+CLASS zbp_r_soschlines DEFINITION PUBLIC ABSTRACT FINAL FOR BEHAVIOR OF zr_soschlines.
+protected section.
+private section.
+ENDCLASS.
+
+
+
+CLASS ZBP_R_SOSCHLINES IMPLEMENTATION.
+ENDCLASS.

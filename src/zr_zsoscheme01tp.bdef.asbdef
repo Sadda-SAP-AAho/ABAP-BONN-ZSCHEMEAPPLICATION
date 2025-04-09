@@ -1,0 +1,91 @@
+managed;
+strict ( 2 );
+define behavior for ZR_zsoscheme01TP alias zsoscheme
+implementation in class ZBP_R_zsoscheme01TP unique
+persistent table ZSOSCHEME
+etag master LastChangedAt
+lock master
+authorization master( global )
+
+{
+  field ( readonly )
+   CreatedBy,
+   CreatedAt,
+   LastChangedAt,
+   LocalLastChangedAt;
+
+  field ( readonly : update )
+   Bukrs,
+   Salesorder,
+   Schemecode,
+   Schemegroupcode;
+
+
+  create;
+  update;
+  delete;
+
+  static action createSOSchemeData parameter Z_I_SOPARM result [1] $self;
+
+  mapping for ZSOSCHEME
+  {
+    Bukrs = BUKRS;
+    Salesorder = SALESORDER;
+    Schemecode = SCHEMECODE;
+    Schemegroupcode = SCHEMEGROUPCODE;
+    Schemecheckcode = SCHEMECHECKCODE;
+    Orderqty = ORDERQTY;
+    Freeqty = FREEQTY;
+    Appliedqty = appliedqty;
+    CreatedBy = CREATED_BY;
+    CreatedAt = CREATED_AT;
+    LastChangedBy = LAST_CHANGED_BY;
+    LastChangedAt = LAST_CHANGED_AT;
+    LocalLastChangedAt = LOCAL_LAST_CHANGED_AT;
+  }
+
+  association _zsoschemelines { create; }
+}
+
+define behavior for ZR_zsoschemelinesTP alias zsoschemelines
+implementation in class ZBP_R_zsoschemelinesTP unique
+persistent table ZSOSCHEMELINES
+etag master LastChangedAt
+lock dependent by _zsoscheme
+authorization dependent by _zsoscheme
+
+{
+  field ( readonly )
+   Bukrs,
+   Salesorder,
+   Schemecode,
+   Schemegroupcode,
+   Schemecheckcode,
+   LastChangedAt;
+
+  field ( readonly : update )
+   Productcode;
+
+
+  update;
+  delete;
+
+  mapping for ZSOSCHEMELINES
+  {
+    Bukrs = BUKRS;
+    Salesorder = SALESORDER;
+    Schemecode = SCHEMECODE;
+    Schemegroupcode = SCHEMEGROUPCODE;
+    Schemecheckcode = SCHEMECHECKCODE;
+    Productcode = PRODUCTCODE;
+    Productdesc = PRODUCTDESC;
+    Freeqty = FREEQTY;
+    CreatedBy = CREATED_BY;
+    CreatedAt = CREATED_AT;
+    LastChangedBy = LAST_CHANGED_BY;
+    LastChangedAt = LAST_CHANGED_AT;
+    LocalLastChangedAt = LOCAL_LAST_CHANGED_AT;
+  }
+
+  association _zsoscheme;
+}

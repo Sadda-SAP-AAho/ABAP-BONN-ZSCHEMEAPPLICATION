@@ -1,0 +1,24 @@
+projection;
+strict ( 2 );
+define behavior for ZC_zsoscheme01TP alias zsoscheme
+use etag
+
+{
+  use create;
+  use update;
+  use delete;
+
+  use action createSOSchemeData;
+
+  use association _zsoschemelines { create; }
+}
+
+define behavior for ZC_zsoschemelinesTP alias zsoschemelines
+use etag
+
+{
+  use update;
+  use delete;
+
+  use association _zsoscheme;
+}
