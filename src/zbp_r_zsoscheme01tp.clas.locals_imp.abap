@@ -42,7 +42,9 @@ CLASS LHC_ZSOSCHEME IMPLEMENTATION.
     DATA insertTag TYPE int1.
     DATA supplytag TYPE int1.
 
+
     LOOP AT keys INTO DATA(ls_key).
+        insertTag = 0.
         TRY.
             salesorder = ls_key-%param-salesorder .
             salesorder = |{ salesorder  WIDTH = 10 ALIGN = RIGHT  PAD = '0' }|.
@@ -58,13 +60,30 @@ CLASS LHC_ZSOSCHEME IMPLEMENTATION.
             ENDIF.
         ENDTRY.
 
+        SELECT FROM I_SalesOrder as soi
+            FIELDS soi~DistributionChannel, soi~OrganizationDivision
+            WHERE soi~SalesOrder = @salesorder
+            INTO TABLE @DATA(so).
+        LOOP AT so INTO DATA(waso).
+            IF waso-DistributionChannel <> 'GT' OR waso-OrganizationDivision <> 'B2'.
+              APPEND VALUE #( %cid = ls_key-%cid
+                              %msg = new_message_with_text(
+                                       severity = if_abap_behv_message=>severity-error
+                                       text     = 'Sales Order No. must be of GT and B2 category.' )
+                            ) TO reported-zsoscheme.
+              RETURN.
+            ENDIF.
+        ENDLOOP.
+
         customergroup = ''.
         SELECT SINGLE FROM I_SalesOrder as soi
-        join I_Customer as cus on soi~SoldToParty = cus~Customer
-            FIELDS cus~Region
-            WHERE soi~SalesOrder = @salesorder
+"        join I_Customer as cus on soi~SoldToParty = cus~Customer
+        join I_CustomerSalesArea as cus on soi~SoldToParty = cus~Customer
+            FIELDS cus~SalesDistrict
+            WHERE soi~SalesOrder = @salesorder AND cus~DistributionChannel = 'GT' AND cus~Division = 'B2'
             INTO @DATA(customergroup2).
         customergroup = customergroup2.
+
 
         plantcode = ''.
         SELECT SINGLE FROM I_SalesOrderItem as soi
@@ -96,6 +115,7 @@ CLASS LHC_ZSOSCHEME IMPLEMENTATION.
         LOOP AT ltlines INTO DATA(walines).
             IF schemecode <> walines-schemecode OR schemegroupcode <> walines-schemegroupcode.
                 IF orderqty <> 0 and orderqty >= minimumqty.
+                    insertTag = 1.
                     freeqtycalc = orderqty / schemeqty.
                     freeqty = floor( freeqtycalc ).
                     "insert so scheme & lines
@@ -161,94 +181,6 @@ CLASS LHC_ZSOSCHEME IMPLEMENTATION.
                         CLEAR : create_soschemelinetab.
                     ENDLOOP.
 
-
-
-
-*                    MODIFY ENTITIES OF ZR_zsoscheme01TP IN LOCAL MODE
-*                    ENTITY zsoscheme
-*                    UPDATE FIELDS ( Appliedqty )
-*                          WITH VALUE #( ( %cid_ref = ls_key-%cid
-*                                          Bukrs = companycode
-*                                          Salesorder = salesorder
-*                                          Schemecode = schemecode
-*                                          Appliedqty = 2 ) )
-*
-*                          CREATE by \_zsoschemelines FIELDS ( Bukrs Salesorder Schemecode  Productcode Freeqty )
-*                          WITH VALUE #( ( %cid_ref = ls_key-%cid
-*                                          Bukrs = companycode
-*                                          Salesorder = salesorder
-*                                          Schemecode = schemecode
-*                                          %target = VALUE #( ( %cid = 'asasa'
-*                                                                Bukrs = companycode
-*                                                                Salesorder = salesorder
-*                                                                Schemecode = schemecode
-*                                                                Productcode = '2'
-*                                                                Productdesc = 'bbbbbbb'
-*                                                                Freeqty = 44 ) )
-*                                        )  )
-*                    MAPPED   mapped
-*                    FAILED   failed
-*                    REPORTED reported.
-
-*                    MODIFY ENTITIES OF ZR_zsoscheme01TP IN LOCAL MODE
-*                    ENTITY zsoscheme
-*                    CREATE FIELDS ( bukrs salesorder schemecode orderqty freeqty appliedqty )
-*                          WITH create_soschemetab
-*
-*                          CREATE by \_zsoschemelines FIELDS ( Bukrs Salesorder Schemecode  Productcode Freeqty )
-*                          WITH VALUE #( ( %cid_ref = ls_key-%cid
-*                                          Bukrs = companycode
-*                                          Salesorder = salesorder
-*                                          Schemecode = schemecode
-*                                          %target = VALUE #( ( %cid = 'asasa'
-*                                                                Bukrs = companycode
-*                                                                Salesorder = salesorder
-*                                                                Schemecode = schemecode
-*                                                                Productcode = '1'
-*                                                                Productdesc = 'asas'
-*                                                                Freeqty = 12 ) )
-*                                        )  )
-*                    MAPPED   mapped
-*                    FAILED   failed
-*                    REPORTED reported.
-
-
-
-*                    SELECT FROM zschemelines as schline
-*                        FIELDS schline~schemecode, schline~productcode
-*                    WHERE schline~bukrs = schline~bukrs and schline~schemecode = @schemecode
-*                    ORDER BY schline~productcode
-*                        INTO TABLE @DATA(ltschlines2).
-
-*                    LOOP AT ltschlines INTO DATA(waschlines).
-*                        create_soschemeline = VALUE #( %cid = ls_key-%cid
-*                                    Bukrs = companycode
-*                                    Salesorder = salesorder
-*                                    Schemecode = schemecode
-*                                    Productcode = waschlines-productcode
-*                                    Freeqty = 0
-*                                    ).
-*                        APPEND create_soschemeline TO create_soschemelinetab.
-*     "         strucfgdatasingle-local_created_by = sy-uname.
-*     " strucfgdatasingle-local_created_at = sy-datum.
-*
-*
-*                        MODIFY ENTITIES OF ZR_zsoscheme01TP IN LOCAL MODE
-*                        CREATE by
-*                        FIELDS ( bukrs salesorder schemecode productcode freeqty )
-*                              WITH create_soschemelinetab
-*                        MAPPED   mapped
-*                        FAILED   failed
-*                        REPORTED reported.
-*
-*                        MODIFY ENTITIES OF ZR_GateEntryHeader IN LOCAL MODE
-*          ENTITY GateEntryLines
-*          UPDATE
-*          FIELDS ( Remarks ) WITH VALUE #( ( %tky = entryline-%tky Remarks = entryline-Vendorcode ) ).
-*
-*
-*                    ENDLOOP.
-
                     CLEAR : create_soscheme.
                     CLEAR : create_soschemetab.
 
@@ -275,6 +207,7 @@ CLASS LHC_ZSOSCHEME IMPLEMENTATION.
         ENDLOOP.
         IF orderqty <> 0 and orderqty >= minimumqty.
             "insert so scheme & lines
+            inserttag = 1.
             freeqtycalc = orderqty / schemeqty.
             freeqty = floor( freeqtycalc ).
             create_soscheme = VALUE #( %cid      = ls_key-%cid
@@ -341,7 +274,28 @@ CLASS LHC_ZSOSCHEME IMPLEMENTATION.
 
 
         ENDIF.
+        IF inserttag = 0.
+            create_soscheme = VALUE #( %cid      = ls_key-%cid
+                            Bukrs = companycode
+                            Salesorder = salesorder
+                            Schemecode = 'NA'
+                            Schemegroupcode = 'NA'
+                            Schemecheckcode = 'NA'
+                            Orderqty = 0
+                            Freeqty = 0
+                            Appliedqty = 0
+                            ).
+            APPEND create_soscheme TO create_soschemetab.
 
+            MODIFY ENTITIES OF ZR_zsoscheme01TP IN LOCAL MODE
+            ENTITY zsoscheme
+            CREATE FIELDS ( bukrs salesorder schemecode schemegroupcode schemecheckcode orderqty freeqty appliedqty )
+                  WITH create_soschemetab
+            MAPPED   mapped
+            FAILED   failed
+            REPORTED reported.
+
+        ENDIF.
 
 
         APPEND VALUE #( %cid = ls_key-%cid
