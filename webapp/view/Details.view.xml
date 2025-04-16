@@ -1,0 +1,228 @@
+<mvc:View
+    xmlns:rowmodes="sap.ui.table.rowmodes"
+    xmlns="sap.m"
+    xmlns:uxap="sap.uxap"
+    xmlns:core="sap.ui.core"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:smartForm="sap.ui.comp.smartform"
+    xmlns:table="sap.m.table"
+    xmlns:smartTable="sap.ui.comp.smarttable"
+    xmlns:smartField="sap.ui.comp.smartfield"
+    xmlns:html="http://www.w3.org/1999/xhtml"
+    xmlns:app="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1"
+    controllerName="zschemeapp.controller.Details"
+    height="100%"
+>
+    <Page
+        id="_IDGenPage4"
+        showHeader="true"
+        showFooter="false"
+    >
+        <customHeader>
+            <OverflowToolbar id="_IDGenOverflowToolbar6">
+                <ToolbarSpacer id="_IDGenToolbarSpacer5" />
+                <Button
+                    id="_IDGenButton15"
+                    text="Edit"
+                    type="Emphasized"
+                    visible="false"
+                    press="editEnable"
+                />
+                <Button
+                    id="_IDGenButton3"
+                    text="Add to SO"
+                    press="saveSOLines"
+                    visible="false"
+                />
+                <Button
+                    id="_IDGenButton12"
+                    press="onClickDelete"
+                    visible="false"
+                    text="Delete"
+                />
+            </OverflowToolbar>
+        </customHeader>
+        <uxap:ObjectPageLayout
+            id="ObjectPageLayout"
+            headerContentPinned="true"
+            upperCaseAnchorBar="false"
+        >
+            <uxap:sections>
+                <uxap:ObjectPageSection
+                    titleUppercase="false"
+                    title="Scheme Details"
+                    id="_IDGenPanel2"
+                    class="sapUiResponsiveMargin"
+                >
+                    <uxap:subSections>
+                        <uxap:ObjectPageSubSection id="goalsSectionSS1">
+                            <uxap:blocks>
+                                <smartForm:SmartForm
+                                    id="smartForm"
+                                    app:defaultCheckBoxDisplayBehaviour="OnOff"
+                                    app:defaultDropDownDisplayBehaviour="idAndDescription"
+                                    validationMode="Async"
+                                >
+                                    <smartForm:layout>
+                                        <smartForm:ColumnLayout
+                                            id="_IDGenColumnLayout"
+                                            columnsM="2"
+                                            columnsL="3"
+                                            columnsXL="4"
+                                        />
+                                    </smartForm:layout>
+                                    <smartForm:Group id="_IDGenGroup1">
+                                        <smartForm:GroupElement
+                                            id="_IDGenGroupElement"
+                                        >
+                                            <smartField:SmartField
+                                                id="_IDGenSmartField"
+                                                textLabel="Company"
+                                                value="{Bukrs}"
+                                            />
+                                        </smartForm:GroupElement>
+                                        <smartForm:GroupElement
+                                            id="_IDGenGroupElement1"
+                                        >
+                                            <smartField:SmartField
+                                                id="_IDGenSmartField1"
+                                                textLabel="Sales order"
+                                                value="{Salesorder}"
+                                            />
+                                        </smartForm:GroupElement>
+                                    </smartForm:Group>
+                                    <smartForm:Group id="_IDGenGroup">
+                                        <smartForm:GroupElement
+                                            id="_IDGenGroupElement2"
+                                        >
+                                            <smartField:SmartField
+                                                id="_IDGenSmartField2"
+                                                value="{Freeqty}"
+                                                textLabel="Free Qty"
+                                            />
+                                        </smartForm:GroupElement>
+                                        <smartForm:GroupElement
+                                            id="_IDGenGroupElement4"
+                                        >
+                                            <smartField:SmartField
+                                                id="_IDGenSmartField4"
+                                                value="{OrderQty}"
+                                                textLabel="Order Qty"
+                                            />
+                                        </smartForm:GroupElement>
+                                        <smartForm:GroupElement
+                                            id="_IDGenGroupElement3"
+                                        >
+                                            <smartField:SmartField
+                                                id="_IDGenSmartField3"
+                                                value="{Appliedqty}"
+                                                textLabel="Applied Qty"
+                                            />
+                                        </smartForm:GroupElement>
+                                    </smartForm:Group>
+                                </smartForm:SmartForm>
+                            </uxap:blocks>
+                        </uxap:ObjectPageSubSection>
+                    </uxap:subSections>
+                </uxap:ObjectPageSection>
+                <uxap:ObjectPageSection
+                    titleUppercase="false"
+                    id="_IDGenPanel4"
+                    class="sapUiResponsiveMargin"
+                    title="Schemes"
+                    showTitle="false"
+                >
+                    <uxap:subSections>
+                        <uxap:ObjectPageSubSection
+                            id="_IDGenObjectPageSubSection2"
+                        >
+                            <uxap:blocks>
+                                <smartTable:SmartTable
+                                    id="ExpLinesTable"
+                                    tableType="ResponsiveTable"
+                                    beforeRebindTable="onBeforeRebindTable"
+                                    entitySet="zsoscheme"
+                                    enableAutoBinding="true"
+                                    header="Schemes"
+                                    persistencyKey="SmartTableAnalytical_Explored"
+                                    class="sapUiResponsiveContentPadding"
+                                    enableAutoColumnWidth="true"
+                                    headerLevel="H6"
+                                    initiallyVisibleFields="Schemecode,Schemegroupcode,Orderqty,Freeqty,Appliedqty,CreatedBy,CreatedAt"
+                                >
+                                    <Table
+                                        id="_IDGenTable2"
+                                        mode="None"
+                                    />
+                                </smartTable:SmartTable>
+                            </uxap:blocks>
+                        </uxap:ObjectPageSubSection>
+                    </uxap:subSections>
+                </uxap:ObjectPageSection>
+                <uxap:ObjectPageSection
+                    titleUppercase="false"
+                    id="_IDGenPanel3"
+                    class="sapUiResponsiveMargin"
+                    title="Scheme Lines"
+                    showTitle="false"
+                >
+                    <uxap:subSections>
+                        <uxap:ObjectPageSubSection
+                            id="_IDGenObjectPageSubSection"
+                        >
+                            <uxap:blocks>
+                                <smartTable:SmartTable
+                                    id="ImpLinesTable"
+                                    tableType="ResponsiveTable"
+                                    beforeRebindTable="onBeforeRebindTable"
+                                    entitySet="zsoschemelines"
+                                    enableAutoBinding="true"
+                                    header="Scheme Lines"
+                                    persistencyKey="SmartTableAnalytical_Explored"
+                                    class="sapUiResponsiveContentPadding"
+                                    enableAutoColumnWidth="true"
+                                    editTogglable="false"
+                                    app:useSmartToggle="true"
+                                    headerLevel="H6"
+                                    initiallyVisibleFields="Schemecode,Schemegroupcode,Productcode,Productdesc,Freeqty,CreatedBy"
+                                >
+                                    <Table
+                                        id="_IDGenTable1"
+                                        mode="None"
+                                    />
+                                </smartTable:SmartTable>
+                            </uxap:blocks>
+                        </uxap:ObjectPageSubSection>
+                    </uxap:subSections>
+                </uxap:ObjectPageSection>
+            </uxap:sections>
+        </uxap:ObjectPageLayout>
+
+        <footer>
+            <OverflowToolbar id="_IDGenOverflowToolbar8">
+                <Button
+                    id="_IDGenButton16"
+                    visible="{=!!${message>/}.length}"
+                    icon="{ path: '/', formatter: '.buttonIconFormatter' }"
+                    type="{ path: '/', formatter: '.buttonTypeFormatter' }"
+                    text="{path: '/', formatter: '.highestSeverityMessages' }"
+                    press=".handleMessagePopoverPress"
+                    ariaHasPopup="Dialog"
+                />
+                <ToolbarSpacer id="_IDGenToolbarSpacer7" />
+                <Button
+                    id="_IDGenButton17"
+                    type="Default"
+                    text="Cancel"
+                    press="cancelDisable"
+                />
+                <Button
+                    id="_IDGenButton18"
+                    type="Emphasized"
+                    text="Save"
+                    press="onClickSave"
+                />
+            </OverflowToolbar>
+        </footer>
+    </Page>
+</mvc:View>

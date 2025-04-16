@@ -1,0 +1,49 @@
+/* Enter your custom styles here */
+@media (min-width: 80rem) {
+    .sapUiMedia-Std-Desktop .sapUShellApplicationContainer.sapUShellApplicationContainerLimitedWidth {
+        width: 100%!important;
+    }
+}
+
+.vBox{
+    width: 40%!important;
+    margin: auto;
+}
+
+
+.FontColorChange{
+    display: flex;
+}
+
+._IDGenVBox,._IDGenSimpleForm,.OrderDetailsTable2{
+    width: 95%!important;
+}
+
+.sapUiCompFilterBarItem{
+    max-width: unset!important;
+}
+
+.my-2{
+    margin: auto!important;
+    margin-top: 8px!important;
+    margin-bottom: 8px!important;
+}
+
+
+.sapUiSmallMarginRight{
+    margin-right: 5px!important;
+}
+.SalesOrder-Inp{
+    width: 100%!important;
+}
+
+
+#application-zschemeapp-display-component---Maintain--_IDGenHBox .sapMFlexItem{
+    width:100%!important;
+}
+
+
+[id$="---Maintain--_IDGenTable"] {
+    max-height: 63vh;
+    overflow-y: auto;
+}
